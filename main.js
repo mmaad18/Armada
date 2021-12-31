@@ -1,9 +1,8 @@
-var spawnCreep = require('spawnCreep');
-var clearCreepNames = require('clearCreepNames');
+var CreepManager = require('CreepManager');
+var WasteManager = require('WasteManager');
 
 module.exports.loop = function () {
 
-    clearCreepNames.run();
-    spawnCreep.run("Spawn1", "harvester", 0, 1, 0, 1, 0, 0, 0, 1);
-    
+    WasteManager.clearDeadNames();
+    CreepManager.spawn("Spawn1", "harvester", 0, 1, 0, 1, 0, 0, 0, 1);
 }

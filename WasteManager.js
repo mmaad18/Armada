@@ -1,6 +1,6 @@
-var clearCreepNames = {
+var WasteManager = {
 
-    run: function() {
+    clearDeadNames: function() {
 
         for(var name in Memory.creeps) {
             if(!Game.creeps[name]) {
@@ -11,4 +11,4 @@ var clearCreepNames = {
     }
 };
 
-module.exports = clearCreepNames;
+module.exports = WasteManager;

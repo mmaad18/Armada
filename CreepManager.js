@@ -1,6 +1,6 @@
-var spawnCreep = {
+var CreepManager = {
 
-    run: function(spawner, role, tough, carry, claim, work, attack, rangedAttack, heal, move) {
+    spawn: function(spawner, role, tough, carry, claim, work, attack, rangedAttack, heal, move) {
 
         var toughArray = Array(tough).fill(TOUGH);
         var carryArray = Array(carry).fill(CARRY);
@@ -18,8 +18,17 @@ var spawnCreep = {
 
         Game.spawns[spawner].spawnCreep(body, name, {memory: {role: role}});
 
-        console.log(`${spawner} spawned new ${role}: ${name}`);
+        if(Game.spawns[spawner].spawning) {
+            var spawningCreep = Game.creeps[Game.spawns[spawner].spawning.name];
+            Game.spawns[spawner].room.visual.text(
+                '🛠️' + spawningCreep.memory.role,
+                Game.spawns[spawner].pos.x + 1,
+                Game.spawns[spawner].pos.y,
+                {align: 'left', opacity: 0.8});
+
+            console.log(`${spawner} spawned new ${role}: ${name}`);
+        }
     }
 };
 
-module.exports = spawnCreep;
+module.exports = CreepManager;
