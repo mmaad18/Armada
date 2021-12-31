@@ -1,6 +1,6 @@
 var CreepManager = {
 
-    spawn: function(spawner, role, tough, carry, claim, work, attack, rangedAttack, heal, move) {
+    spawnCreep: function(spawner, role, tough, carry, claim, work, attack, rangedAttack, heal, move) {
 
         var toughArray = Array(tough).fill(TOUGH);
         var carryArray = Array(carry).fill(CARRY);

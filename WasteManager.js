@@ -1,6 +1,6 @@
 var WasteManager = {
 
-    clearDeadNames: function() {
+    clearVoidNames: function() {
 
         for(var name in Memory.creeps) {
             if(!Game.creeps[name]) {
