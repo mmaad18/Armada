@@ -1,6 +1,8 @@
-var WasteManager = {
 
-    clearVoidNames: function() {
+
+var SpawnManager = {
+
+    run: function() {
 
         for(let name in Memory.creeps) {
             if(!Game.creeps[name]) {
@@ -11,4 +13,4 @@ var WasteManager = {
     }
 };
 
-module.exports = WasteManager;
+module.exports = SpawnManager;

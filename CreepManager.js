@@ -1,25 +1,30 @@
 var CreepManager = {
 
-    spawnCreep: function(spawner, role, tough, carry, claim, work, attack, rangedAttack, heal, move) {
+    spawnCreep: function(spawner, tough, carry, claim, work, attack, rangedAttack, heal, move, role = "harvester") {
 
-        var toughArray = Array(tough).fill(TOUGH);
-        var carryArray = Array(carry).fill(CARRY);
-        var claimArray = Array(claim).fill(CLAIM);
-        var workArray = Array(work).fill(WORK);
-        var attackArray = Array(attack).fill(ATTACK);
-        var rangedAttackArray = Array(rangedAttack).fill(RANGED_ATTACK);
-        var healArray = Array(heal).fill(HEAL);
-        var moveArray = Array(move).fill(MOVE);
+        let toughArray = Array(tough).fill(TOUGH);
+        let carryArray = Array(carry).fill(CARRY);
+        let claimArray = Array(claim).fill(CLAIM);
+        let workArray = Array(work).fill(WORK);
+        let attackArray = Array(attack).fill(ATTACK);
+        let rangedAttackArray = Array(rangedAttack).fill(RANGED_ATTACK);
+        let healArray = Array(heal).fill(HEAL);
+        let moveArray = Array(move).fill(MOVE);
 
-        var body = toughArray.concat(carryArray, claimArray, workArray, attackArray, rangedAttackArray, healArray,
+        let body = toughArray.concat(carryArray, claimArray, workArray, attackArray, rangedAttackArray, healArray,
             moveArray);
+        let name = role.charAt(0).toUpperCase() + role.slice(1) + Game.time;
 
-        var name = role.charAt(0).toUpperCase() + role.slice(1) + Game.time;
-
-        Game.spawns[spawner].spawnCreep(body, name, {memory: {role: role}});
+        if(role == "harvester") {
+            let resource = resourceAssigner(spawner, name);
+            Game.spawns[spawner].spawnCreep(body, name, {memory: {role: role, resource: resource}});
+        }
+        else {
+            Game.spawns[spawner].spawnCreep(body, name, {memory: {role: role}});
+        }
 
         if(Game.spawns[spawner].spawning) {
-            var spawningCreep = Game.creeps[Game.spawns[spawner].spawning.name];
+            let spawningCreep = Game.creeps[Game.spawns[spawner].spawning.name];
             Game.spawns[spawner].room.visual.text(
                 '🛠️' + spawningCreep.memory.role,
                 Game.spawns[spawner].pos.x + 1,
@@ -30,5 +35,13 @@ var CreepManager = {
         }
     }
 };
+
+function resourceAssigner(spawner, name){
+    //let sources = Game.spawns[spawner].room.find(FIND_SOURCES);
+
+    Game.spawns[spawner].memory.assignments = {name: name, resource: 1};
+
+    return Game.spawns[spawner].memory.assignments.resource;
+}
 
 module.exports = CreepManager;
